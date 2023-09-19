@@ -1,0 +1,19 @@
+<h2>Lista della spesa:</h2>
+<p>{{ oggi | date:"fullDate" }}</p><!-- il | qui non è un or ma una pipe, a sx c'è l'oggetto, a dx c'è la specifica-->
+<ul>
+    <li *ngFor="let product of products | sort; let a=index" (click)="selectedProduct = product">{{(a+1) + ". " + product.name + " " + (product.price | currency:"EUR")}}</li>
+</ul> <!-- il pipe sort non è prefatto come quello date, ma è un file presente all'interno della dir products sort.pipe.ts-->
+<app-product-detail
+    *ngIf="selectedProduct; else nessunProdotto"
+    [id] = "selectedProduct.id"
+    #ciccio
+    (bought)="onBuy($event)">
+</app-product-detail>
+<ng-template #nessunProdotto>
+    <p>Nessun prodotto selezionato.</p>
+</ng-template>
+<!-- <h3>Offerte:</h3>
+<ng-template appProductOffer [productList]="this"></ng-template>
+<h3>I miei prodotti preferiti</h3> -->
+<!-- <app-favorite-products></app-favorite-products> -->
+<!-- <app-favorite-products [products]="products"></app-favorite-products> -->
